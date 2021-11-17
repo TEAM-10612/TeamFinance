@@ -1,8 +1,10 @@
 package com.financialboard.service;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BoardRepository {
+@RequiredArgsConstructor
+public class BoardService {
 }

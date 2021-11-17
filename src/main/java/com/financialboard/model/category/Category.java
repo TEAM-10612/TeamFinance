@@ -18,6 +18,7 @@ import java.util.List;
 public class Category {
 
     @Id@GeneratedValue
+    @Column(name = "category_id")
     private Long id;
 
     private String name;
@@ -25,8 +26,9 @@ public class Category {
     private LocalDateTime createTime;
 
     @ManyToOne
+    @JoinColumn(name = "board_id")
     private Board board;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
     private List<Post>posts = new ArrayList<>();
 }

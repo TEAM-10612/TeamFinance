@@ -18,6 +18,7 @@ import java.util.List;
 public class Post {
 
     @Id@GeneratedValue
+    @Column(name = "post_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,7 +29,7 @@ public class Post {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CATEGORY_ID")
+    @JoinColumn(name = "categroy_id")
     private Category category;
 
     @OneToMany(mappedBy = "post" , fetch = FetchType.LAZY)
