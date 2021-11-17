@@ -9,7 +9,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 public @interface CurrentUser {
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
 }
 >>>>>>> Revert "Revert "로그인 기능 구현""
+=======
+}
+>>>>>>> origin/develop
