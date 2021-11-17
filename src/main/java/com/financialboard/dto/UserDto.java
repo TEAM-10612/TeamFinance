@@ -1,9 +1,8 @@
 package com.financialboard.dto;
 
-import com.financialboard.encryption.EncryptionService;
 import com.financialboard.model.user.User;
-import com.financialboard.model.user.UserLevel;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -15,7 +14,6 @@ import javax.validation.constraints.Pattern;
 public class UserDto {
 
     @Getter
-    @NoArgsConstructor
     public static class SaveRequest{
 
         @Email
@@ -50,34 +48,6 @@ public class UserDto {
                     .nickname(this.nickname)
                     .phone(this.phone)
                     .build();
-        }
-    }
-    @Getter
-    @NoArgsConstructor
-    public static class LoginRequest{
-
-        private String email;
-        private String password;
-
-        public void passwordEncryption(EncryptionService encryptionService){
-            this.password = encryptionService.encrypt(password);
-        }
-    }
-
-    @Getter
-    @NoArgsConstructor
-    public static class UserInfoDto {
-        private String email;
-        private String nickname;
-        private String phone;
-        private UserLevel userLevel;
-
-        @Builder
-        public UserInfoDto(String email, String nickname, String phone, UserLevel userLevel) {
-            this.email = email;
-            this.nickname = nickname;
-            this.phone = phone;
-            this.userLevel = userLevel;
         }
     }
 }
