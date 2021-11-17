@@ -12,9 +12,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class UserBase extends BaseTimeEntity{
 
     @Id@GeneratedValue
+    @Column(name = "user_id")
     private Long id;
 
     protected String email;
