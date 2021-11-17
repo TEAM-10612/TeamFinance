@@ -1,7 +1,15 @@
 package com.financialboard.model.user;
 
+import com.financialboard.model.comment.Comment;
+import com.financialboard.model.post.Post;
 import lombok.*;
+import net.bytebuddy.pool.TypePool;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -10,7 +18,14 @@ import javax.persistence.Entity;
 public class User extends UserBase {
 
     private String nickname;
+
     private String phone;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 
 
     @Builder
