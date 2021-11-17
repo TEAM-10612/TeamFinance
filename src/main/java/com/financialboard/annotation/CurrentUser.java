@@ -8,4 +8,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 public @interface CurrentUser {
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Revert "Revert "로그인 기능 구현""
