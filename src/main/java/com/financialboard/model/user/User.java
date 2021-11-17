@@ -1,6 +1,5 @@
 package com.financialboard.model.user;
 
-import com.financialboard.dto.UserDto;
 import com.financialboard.model.comment.Comment;
 import com.financialboard.model.post.Post;
 import lombok.*;
@@ -34,15 +33,5 @@ public class User extends UserBase {
         super(id, email, password, userLevel);
         this.nickname = nickname;
         this.phone = phone;
-    }
-
-
-    public UserDto.UserInfoDto toUserInfoDto(){
-        return UserDto.UserInfoDto.builder()
-                .email(this.getEmail())
-                .nickname(this.getNickname())
-                .phone(this.getPhone())
-                .userLevel(this.userLevel)
-                .build();
     }
 }
