@@ -1,11 +1,9 @@
 package com.financialboard.dto;
 
+import com.financialboard.encryption.EncryptionService;
 import com.financialboard.model.user.User;
 import com.financialboard.model.user.UserLevel;
-import com.financialboard.service.EncryptionService;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -18,18 +16,21 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor
-    public static class SaveRequest {
+    public static class SaveRequest{
 
         @Email
         @NotBlank
         private String email;
+
         @NotBlank
-        @Length(min = 6, max = 20, message = "6자 이상 20자 이하로 입력하세요.")
+        @Length(min = 6, max = 20,message = "6자 이상 20자 이하로 입력하세요.")
         private String password;
+
         @NotBlank
-        @Length(min = 6, max = 20)
+        @Length(min = 6,max = 20)
         @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-zA-z0-9]{3,20}$")
         private String nickname;
+
         @NotBlank
         @Length(min = 10, max = 11)
         private String phone;
@@ -42,7 +43,7 @@ public class UserDto {
             this.phone = phone;
         }
 
-        public User toEntity() {
+        public User toEntity(){
             return User.builder()
                     .email(this.email)
                     .password(this.password)
@@ -51,15 +52,14 @@ public class UserDto {
                     .build();
         }
     }
-
     @Getter
     @NoArgsConstructor
-    public static class LoginRequest {
+    public static class LoginRequest{
 
         private String email;
         private String password;
 
-        public void passwordEncryption(EncryptionService encryptionService) {
+        public void passwordEncryption(EncryptionService encryptionService){
             this.password = encryptionService.encrypt(password);
         }
     }

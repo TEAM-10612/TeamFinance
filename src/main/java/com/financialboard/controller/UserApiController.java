@@ -29,7 +29,6 @@ public class UserApiController {
         return CREATE;
     }
 
-
     /**
      * 로그인
      * @param loginRequest
@@ -60,5 +59,6 @@ public class UserApiController {
         UserDto.UserInfoDto loginUser = sessionLoginService.getCurrentUser(email);
         return ResponseEntity.ok(loginUser);
     }
+
 
 }

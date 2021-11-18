@@ -35,6 +35,8 @@ public class User extends UserBase {
         this.nickname = nickname;
         this.phone = phone;
     }
+
+
     public UserDto.UserInfoDto toUserInfoDto(){
         return UserDto.UserInfoDto.builder()
                 .email(this.getEmail())

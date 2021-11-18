@@ -1,12 +1,15 @@
 package com.financialboard.service;
 
 import com.financialboard.dto.UserDto;
+import com.financialboard.encryption.EncryptionService;
 import com.financialboard.exception.UnauthenticatedUserException;
 import com.financialboard.exception.UserNotFoundException;
+import com.financialboard.model.user.User;
 import com.financialboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 
