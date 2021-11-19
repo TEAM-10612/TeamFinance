@@ -1,11 +1,11 @@
-package com.financialboard.service;
+package com.financialboard.encryption;
 
 import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 
 @Component
-public class SHA256 implements EncryptionService{
+public class SHA256Encryption implements EncryptionService {
     @Override
     public String encrypt(String s) {
         try {

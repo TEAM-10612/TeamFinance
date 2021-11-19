@@ -2,6 +2,7 @@ package com.financialboard.model.post;
 
 import com.financialboard.model.category.Category;
 import com.financialboard.model.comment.Comment;
+import com.financialboard.model.likes.Likes;
 import com.financialboard.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,4 +35,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post" , fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post",fetch = FetchType.LAZY)
+    private List<Likes> likesList = new ArrayList<>();
 }

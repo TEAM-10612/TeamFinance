@@ -2,6 +2,7 @@ package com.financialboard.dto;
 
 import com.financialboard.encryption.EncryptionService;
 import com.financialboard.model.user.User;
+import com.financialboard.model.user.UserGrade;
 import com.financialboard.model.user.UserLevel;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -71,12 +72,14 @@ public class UserDto {
         private String nickname;
         private String phone;
         private UserLevel userLevel;
+        private UserGrade userGrade;
 
         @Builder
-        public UserInfoDto(String email, String nickname, String phone, UserLevel userLevel) {
+        public UserInfoDto(String email, String nickname, String phone, UserLevel userLevel,UserGrade userGrade) {
             this.email = email;
             this.nickname = nickname;
             this.phone = phone;
+            this.userGrade = userGrade;
             this.userLevel = userLevel;
         }
     }

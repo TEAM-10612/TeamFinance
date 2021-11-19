@@ -30,8 +30,8 @@ public class User extends UserBase {
 
 
     @Builder
-    public User(Long id, String email, String password, UserLevel userLevel, String nickname, String phone) {
-        super(id, email, password, userLevel);
+    public User(Long id, String email, String password, UserLevel userLevel,UserGrade userGrade, String nickname, String phone) {
+        super(id, email, password, userLevel,userGrade);
         this.nickname = nickname;
         this.phone = phone;
     }
@@ -42,7 +42,8 @@ public class User extends UserBase {
                 .email(this.getEmail())
                 .nickname(this.getNickname())
                 .phone(this.getPhone())
-                .userLevel(this.userLevel)
+                .userLevel(this.getUserLevel())
+                .userGrade(this.getUserGrade())
                 .build();
     }
 }
