@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Getter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Follow {

@@ -5,6 +5,7 @@ import com.financialboard.encryption.EncryptionService;
 import com.financialboard.exception.UnauthenticatedUserException;
 import com.financialboard.exception.UserNotFoundException;
 import com.financialboard.model.user.User;
+import com.financialboard.model.user.UserLevel;
 import com.financialboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpSession;
 
 import static com.financialboard.util.UserConstant.USER_ID;
+import static com.financialboard.util.UserConstant.USER_STATE;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class SessionLoginService {
         request.passwordEncryption(encryptionService);
         String email = request.getEmail();
         String password = request.getPassword();
-        if (!userRepository.existByEmailAndPassword(email, password)) {
+        if (!userRepository.existsByEmailAndPassword(email, password)) {
             throw new UserNotFoundException("아이디 또는 비밀번호가 일치하지 않습니다.");
         }
     }
@@ -51,6 +53,10 @@ public class SessionLoginService {
     public UserDto.UserInfoDto getCurrentUser(String email){
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UnauthenticatedUserException("존재하지 않는 사용자 입니다.")).toUserInfoDto();
+    }
+
+    public UserLevel getUserLevel() {
+        return (UserLevel) session.getAttribute(USER_STATE);
     }
 
 

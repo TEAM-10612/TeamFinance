@@ -25,4 +25,7 @@ public class UserBase extends BaseTimeEntity{
 
     @Enumerated(EnumType.STRING)
     protected UserLevel userLevel;
+
+    @Enumerated(EnumType.STRING)
+    protected UserGrade userGrade;
 }
