@@ -2,10 +2,7 @@ package com.financialboard.service;
 
 import com.financialboard.dto.UserDto;
 import com.financialboard.encryption.EncryptionService;
-import com.financialboard.exception.EmailDuplicateException;
-import com.financialboard.exception.NicknameDuplicateException;
-import com.financialboard.exception.UserNotFoundException;
-import com.financialboard.exception.WrongPasswordException;
+import com.financialboard.exception.*;
 import com.financialboard.model.user.User;
 import com.financialboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +43,6 @@ public class UserService {
         userRepository.deleteByEmail(email);
     }
 
-
-
     @Transactional(readOnly = true)
     public boolean nicknameDuplicateCheck(String nickname) {
         return userRepository.existsByNickname(nickname);
@@ -56,5 +51,34 @@ public class UserService {
     @Transactional(readOnly = true)
     public boolean emailDuplicateCheck(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    @Transactional
+    public void updatePasswordByForgot(UserDto.ChangePasswordRequest request){
+        String email = request.getEmail();
+        request.passwordEncryption(encryptionService);
+
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () ->  new UserNotFoundException("존재하지 않는 사용자 입니다.")
+        );
+
+        user.updatePassword(request.getPasswordAfter());
+    }
+
+    @Transactional
+    public void updatePassword(String email, UserDto.ChangePasswordRequest request){
+        request.passwordEncryption(encryptionService);
+        String beforePassword =  request.getPasswordBefore();
+        String afterPassword =  request.getPasswordAfter();
+
+        if(!userRepository.existsByEmailAndPassword(email,beforePassword)){
+            throw new UnauthenticatedUserException("이전 비밀번호가 일치하지 않습니다.");
+        }
+
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new UnauthenticatedUserException("Unauthenticated user")
+        );
+
+        user.updatePassword(afterPassword);
     }
 }

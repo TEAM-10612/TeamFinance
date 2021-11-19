@@ -20,8 +20,6 @@ public class User extends UserBase {
 
     private String nickname;
 
-    private String phone;
-
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Post> posts = new ArrayList<>();
 
@@ -33,7 +31,6 @@ public class User extends UserBase {
     public User(Long id, String email, String password, UserLevel userLevel,UserGrade userGrade, String nickname, String phone) {
         super(id, email, password, userLevel,userGrade);
         this.nickname = nickname;
-        this.phone = phone;
     }
 
 
@@ -41,9 +38,12 @@ public class User extends UserBase {
         return UserDto.UserInfoDto.builder()
                 .email(this.getEmail())
                 .nickname(this.getNickname())
-                .phone(this.getPhone())
                 .userLevel(this.getUserLevel())
                 .userGrade(this.getUserGrade())
                 .build();
+    }
+
+    public void updatePassword(String password){
+        this.password = password;
     }
 }

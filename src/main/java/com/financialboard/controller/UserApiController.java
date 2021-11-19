@@ -3,6 +3,7 @@ package com.financialboard.controller;
 import com.financialboard.annotation.CurrentUser;
 import com.financialboard.annotation.LoginCheck;
 import com.financialboard.dto.UserDto;
+import com.financialboard.dto.UserDto.PasswordRequest;
 import com.financialboard.dto.UserDto.SaveRequest;
 import com.financialboard.service.SessionLoginService;
 import com.financialboard.service.UserService;
@@ -14,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import static com.financialboard.util.ResponseConstants.CREATE;
+import static com.financialboard.util.ResponseConstants.OK;
 
 @RestController
 @RequestMapping("/user")
@@ -27,6 +29,16 @@ public class UserApiController {
     public ResponseEntity<Void> createUser(@Valid@RequestBody SaveRequest request){
         userService.saveUser(request);
         return CREATE;
+    }
+
+    @DeleteMapping
+    @LoginCheck
+    public ResponseEntity<Void> userDelete(@RequestBody PasswordRequest request,
+                                           @CurrentUser String email){
+        String  password = request.getPassword();
+        userService.deleteUser(email,password);
+        sessionLoginService.logout();
+        return OK;
     }
 
     /**

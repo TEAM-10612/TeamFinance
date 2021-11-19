@@ -3,14 +3,13 @@ package com.financialboard.common.intercepter;
 import com.financialboard.annotation.LoginCheck;
 import com.financialboard.exception.NotAuthorizedException;
 import com.financialboard.exception.UnauthenticatedUserException;
-import com.financialboard.model.user.User;
 import com.financialboard.model.user.UserLevel;
 import com.financialboard.service.SessionLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.HandlerMapping;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
