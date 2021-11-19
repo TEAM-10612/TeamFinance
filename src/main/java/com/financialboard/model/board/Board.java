@@ -1,11 +1,9 @@
 package com.financialboard.model.board;
 
+import com.financialboard.dto.BoardDto;
 import com.financialboard.model.category.Category;
 import com.financialboard.model.user.User;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,5 +26,15 @@ public class Board{
     @OneToMany(mappedBy = "board",fetch = FetchType.LAZY)
     private List<Category>categoryList = new ArrayList<>();
 
+    @Builder
+    public Board(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
+    public BoardDto.BoardInfo boardInfo(){
+        return BoardDto.BoardInfo.builder()
+                .name(this.name)
+                .build();
+    }
 }
