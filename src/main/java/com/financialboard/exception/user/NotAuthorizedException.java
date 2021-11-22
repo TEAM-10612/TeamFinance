@@ -1,4 +1,4 @@
-package com.financialboard.exception;
+package com.financialboard.exception.user;
 
 public class NotAuthorizedException extends RuntimeException {
 

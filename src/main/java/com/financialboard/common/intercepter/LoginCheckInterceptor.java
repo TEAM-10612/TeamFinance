@@ -1,8 +1,8 @@
 package com.financialboard.common.intercepter;
 
 import com.financialboard.annotation.LoginCheck;
-import com.financialboard.exception.NotAuthorizedException;
-import com.financialboard.exception.UnauthenticatedUserException;
+import com.financialboard.exception.user.NotAuthorizedException;
+import com.financialboard.exception.user.UnauthenticatedUserException;
 import com.financialboard.model.user.UserLevel;
 import com.financialboard.service.SessionLoginService;
 import lombok.RequiredArgsConstructor;

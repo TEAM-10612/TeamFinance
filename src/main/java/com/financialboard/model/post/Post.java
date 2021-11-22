@@ -64,7 +64,6 @@ public class Post {
                 .id(this.id)
                 .author(this.author.toUserInfoDto())
                 .content(this.content)
-                .category(this.category.categoryInfo())
                 .postImageUrl(this.postImgUrl)
                 .build();
     }

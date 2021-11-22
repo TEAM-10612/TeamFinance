@@ -2,7 +2,7 @@ package com.financialboard.service;
 
 import com.financialboard.dto.UserDto;
 import com.financialboard.encryption.EncryptionService;
-import com.financialboard.exception.*;
+import com.financialboard.exception.user.*;
 import com.financialboard.model.user.User;
 import com.financialboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
