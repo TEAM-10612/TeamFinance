@@ -13,7 +13,7 @@ public class CategoryDto {
 
     @Getter
     @NoArgsConstructor
-    @Builder
+    @Setter
     public static class CategoryInfo{
         private Long id;
         private String branch;
