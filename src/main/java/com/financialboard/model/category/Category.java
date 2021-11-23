@@ -1,12 +1,8 @@
 package com.financialboard.model.category;
 
 import com.financialboard.dto.CategoryDto;
-import com.financialboard.model.board.Board;
 import com.financialboard.model.post.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,36 +11,40 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
 
-    @Id@GeneratedValue
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id;
 
+    private String branch;
+
+    private String code;
+
     private String name;
 
-    private LocalDateTime createTime;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parents_category_id")
+    private Category parentCategory;
 
-    @ManyToOne
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @OneToMany(mappedBy = "parentCategory",cascade = CascadeType.ALL)
+    private List<Category> subCategory = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
-    private List<Post>posts = new ArrayList<>();
+    private Integer level;
+
     @Builder
-    public Category(Long id, String name, LocalDateTime createTime, Board board) {
-        this.id = id;
+    public Category( String branch, String code, String name,
+                    Category parentCategory,Integer level) {
+        this.branch = branch;
+        this.code = code;
         this.name = name;
-        this.createTime = createTime;
-        this.board = board;
+        this.parentCategory = parentCategory;
+        this.level = level;
+
     }
 
-    public CategoryDto.CategoryInfo categoryInfo(){
-        return CategoryDto.CategoryInfo.builder()
-                .name(this.name)
-                .boardInfo(this.board.boardInfo())
-                .build();
-    }
+
 }

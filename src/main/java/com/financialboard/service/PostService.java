@@ -2,7 +2,7 @@ package com.financialboard.service;
 
 import com.financialboard.dto.PostDto;
 import com.financialboard.dto.PostDto.SaveRequest;
-import com.financialboard.exception.PostNotFoundException;
+import com.financialboard.exception.user.PostNotFoundException;
 import com.financialboard.model.post.Post;
 import com.financialboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
