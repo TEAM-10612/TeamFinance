@@ -122,6 +122,18 @@ public class CategoryService {
         return category.getId();
     }
 
+    @Transactional(readOnly = true)
+    public Map <String, CategoryInfo> getCategory (Long categoryId) {
+
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("찾는 카테고리 없슴"));
+        CategoryInfo categoryDTO = new CategoryInfo(category);
+        Map<String, CategoryInfo> data = new HashMap<>();
+        data.put(category.getName(), categoryDTO);
+
+        return data;
+
+    }
 
 
     public List<Category> categories () {
