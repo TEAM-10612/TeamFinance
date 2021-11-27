@@ -1,5 +1,6 @@
 package com.financialboard.controller;
 
+import com.financialboard.annotation.LoginCheck;
 import com.financialboard.dto.CommentDto;
 import com.financialboard.dto.CommentDto.AddCommentRequest;
 import com.financialboard.repository.CommentRepository;
@@ -16,6 +17,7 @@ public class CommentApiController {
     private final CommentService commentService;
 
     @PostMapping
+    @LoginCheck
     public void saveComment(@RequestBody AddCommentRequest request){
         Long postId = request.getPost().getId();
         Long userId = request.getAuthor().getId();
@@ -23,6 +25,7 @@ public class CommentApiController {
     }
 
     @DeleteMapping("/{id}")
+    @LoginCheck
     public void deleteComment(@PathVariable long id){
         commentService.deleteComment(id);
     }
