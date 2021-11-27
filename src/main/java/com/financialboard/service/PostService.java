@@ -66,4 +66,6 @@ public class PostService {
         return ((updatedImagePath == null && savedImagePath != null) ||
                 (savedImagePath != null && productImage != null));
     }
+
+
 }

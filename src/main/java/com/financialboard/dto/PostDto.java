@@ -30,6 +30,7 @@ public class PostDto {
         @Length(min = 10, max = 300000000)
         private String content;
 
+
         private String postImgUrl;
 
         @NotBlank
@@ -65,6 +66,29 @@ public class PostDto {
         private String content;
         private CategoryInfo category;
         private String postImageUrl;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class PostInsertComment{
+        private Long id;
+        private UserDto.UserPostInfo author;
+        private String title;
+        private String content;
+        private CategoryInfo category;
+        private String postImageUrl;
+
+        public Post toEntity(){
+            return Post.builder()
+                    .author(this.author.toEntity())
+                    .title(this.title)
+                    .content(this.content)
+                    .postImgUrl(this.postImageUrl)
+                    .category(this.category.toEntity())
+                    .build();
+        }
     }
 
 }

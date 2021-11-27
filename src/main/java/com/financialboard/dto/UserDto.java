@@ -68,7 +68,6 @@ public class UserDto {
     public static class UserInfoDto {
         private String email;
         private String nickname;
-
         private UserLevel userLevel;
         private UserGrade userGrade;
 
@@ -139,6 +138,28 @@ public class UserDto {
             this.email = email;
             this.passwordAfter = passwordAfter;
             this.passwordBefore = passwordBefore;
+        }
+    }
+
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class UserPostInfo{
+        private Long id;
+        private String nickname;
+        private UserLevel userLevel;
+        private UserGrade userGrade;
+
+
+        public User toEntity(){
+            return User.builder()
+                    .id(this.id)
+                    .nickname(this.nickname)
+                    .userLevel(this.userLevel)
+                    .userGrade(this.userGrade)
+                    .build();
         }
     }
 }

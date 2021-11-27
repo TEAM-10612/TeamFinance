@@ -2,12 +2,17 @@ package com.financialboard.model.comment;
 
 import com.financialboard.model.post.Post;
 import com.financialboard.model.user.User;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.nio.file.attribute.PosixFileAttributes;
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
+@Getter
 public class Comment {
 
     @Id@GeneratedValue
@@ -26,6 +31,15 @@ public class Comment {
 
     private LocalDateTime createTime;
 
-    private LocalDateTime modifiedTime;
+    @PrePersist
+    public void createTime(){
+        this.createTime = LocalDateTime.now();
+    }
 
+    @Builder
+    public Comment(User author, Post post, String comment) {
+        this.author = author;
+        this.post = post;
+        this.comment = comment;
+    }
 }
