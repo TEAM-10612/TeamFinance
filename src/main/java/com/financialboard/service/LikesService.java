@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class LikesService {
@@ -21,23 +23,12 @@ public class LikesService {
     private final PostRepository postRepository;
 
     @Transactional
-    public boolean addLike(Long userId,Long postId){
-        Post post = postRepository.findById(postId)
-                .orElseThrow(PostNotFoundException::new);
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() ->new UserNotFoundException("존재하지 않는 회원"));
-
-        if(isNOtAlreadyLike(user,post)){
-            likesRepository.save(new Likes(post,user));
-            return true;
-        }
-
-        return false;
+    public void likes(long postId,long userId){
+        likesRepository.likes(postId,userId);
     }
 
-    private boolean isNOtAlreadyLike(User user, Post post) {
-        return likesRepository.findByUserAndPost(user, post).isEmpty();
+    @Transactional
+    public void unLikes(long postId,long userId){
+        likesRepository.unlikes(postId, userId);
     }
-
 }

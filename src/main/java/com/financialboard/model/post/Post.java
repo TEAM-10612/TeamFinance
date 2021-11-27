@@ -44,6 +44,7 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post",fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"post"})
     private List<Likes> likesList = new ArrayList<>();
 
     @Builder
