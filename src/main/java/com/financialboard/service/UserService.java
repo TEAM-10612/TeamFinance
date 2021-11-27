@@ -25,7 +25,7 @@ public class UserService {
             throw new NicknameDuplicateException();
         }
 
-        User user = userRepository.save(request.toEntity());
+        userRepository.save(request.toEntity());
 
     }
 

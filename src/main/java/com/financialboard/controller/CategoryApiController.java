@@ -6,6 +6,7 @@ import com.financialboard.dto.CategoryDto.CategoryReturnDto;
 import com.financialboard.exception.category.ExistsCategoryNameException;
 import com.financialboard.exception.category.NotFoundCategoryException;
 import com.financialboard.model.category.Category;
+import com.financialboard.model.user.UserLevel;
 import com.financialboard.repository.CategoryRepository;
 import com.financialboard.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class CategoryApiController {
     private final CategoryRepository categoryRepository;
 
     @PostMapping
+    @LoginCheck(authority = UserLevel.ADMIN)
     public ResponseEntity<CategoryInfo>saveCategory(
             @Valid@RequestBody CategoryInfo request){
         String requestName = request.getName();
@@ -39,7 +41,7 @@ public class CategoryApiController {
         return ResponseEntity.ok(request);
     }
 
-    @LoginCheck
+    @LoginCheck(authority = UserLevel.ADMIN)
     @DeleteMapping("/{branch}/{code}")
     public ResponseEntity<Void> deleteCategory(@RequestBody String branch,@RequestBody String code){
         Optional<Category> category = categoryRepository.findByBranchAndCode(branch, code);
@@ -51,7 +53,6 @@ public class CategoryApiController {
     }
 
     @GetMapping("/{branch}")
-    @LoginCheck
     public ResponseEntity<CategoryReturnDto> getCategory(@Valid@RequestBody String branch){
         Optional<Category> findBranch = categoryRepository.findByBranch(branch);
         if(findBranch.isEmpty()){
@@ -62,7 +63,7 @@ public class CategoryApiController {
     }
 
     @PutMapping("/{branch}/{code}")
-    @LoginCheck
+    @LoginCheck(authority = UserLevel.ADMIN)
     public ResponseEntity<Long> updateCategory(@RequestBody String branch, @RequestBody String code, @RequestBody@Valid CategoryInfo request){
         Optional<Category> category = categoryRepository.findByBranchAndCode(branch, code);
         if (category.isEmpty()){

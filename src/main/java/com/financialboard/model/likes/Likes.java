@@ -1,5 +1,6 @@
 package com.financialboard.model.likes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.financialboard.model.post.Post;
 import com.financialboard.model.user.User;
 import lombok.Builder;
@@ -17,9 +18,12 @@ public class Likes {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"postList"})
     private User user;
 
     @Builder

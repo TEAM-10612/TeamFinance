@@ -1,5 +1,6 @@
 package com.financialboard.model.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.financialboard.dto.PostDto;
 import com.financialboard.model.category.Category;
 import com.financialboard.model.comment.Comment;
@@ -38,9 +39,12 @@ public class Post {
     private Category category;
 
     @OneToMany(mappedBy = "post" , fetch = FetchType.LAZY)
+    @OrderBy("id")
+    @JsonIgnoreProperties({"post"})
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post",fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"post"})
     private List<Likes> likesList = new ArrayList<>();
 
     @Builder
