@@ -2,7 +2,7 @@ package com.financialboard.service;
 
 
 import com.financialboard.exception.user.IllegalMineTypeException;
-import com.financialboard.exception.user.ImageRoadFailedException;
+import com.financialboard.exception.post.ImageRoadFailedException;
 import org.apache.tika.Tika;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

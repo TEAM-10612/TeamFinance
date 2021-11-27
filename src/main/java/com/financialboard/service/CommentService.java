@@ -1,10 +1,9 @@
 package com.financialboard.service;
 
 
-import com.financialboard.dto.CommentDto;
 import com.financialboard.dto.CommentDto.AddCommentRequest;
-import com.financialboard.exception.CommentNotFoundException;
-import com.financialboard.exception.user.PostNotFoundException;
+import com.financialboard.exception.post.comment.CommentNotFoundException;
+import com.financialboard.exception.post.PostNotFoundException;
 import com.financialboard.exception.user.UserNotFoundException;
 import com.financialboard.model.comment.Comment;
 import com.financialboard.model.post.Post;

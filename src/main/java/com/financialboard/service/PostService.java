@@ -2,7 +2,7 @@ package com.financialboard.service;
 
 import com.financialboard.dto.PostDto;
 import com.financialboard.dto.PostDto.SaveRequest;
-import com.financialboard.exception.user.PostNotFoundException;
+import com.financialboard.exception.post.PostNotFoundException;
 import com.financialboard.model.post.Post;
 import com.financialboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;

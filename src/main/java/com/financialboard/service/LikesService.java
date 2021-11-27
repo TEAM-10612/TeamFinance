@@ -1,6 +1,6 @@
 package com.financialboard.service;
 
-import com.financialboard.exception.user.PostNotFoundException;
+import com.financialboard.exception.post.PostNotFoundException;
 import com.financialboard.exception.user.UserNotFoundException;
 import com.financialboard.model.likes.Likes;
 import com.financialboard.model.post.Post;
