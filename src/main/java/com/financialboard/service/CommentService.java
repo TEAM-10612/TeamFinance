@@ -27,7 +27,7 @@ public class CommentService {
 
     @Transactional
     public void saveComment(long postId, long userId, AddCommentRequest request){
-        Optional<Post> post = postRepository.findById(postId);
+        Post post = postRepository.findById(postId);
         Optional<User> user = userRepository.findById(userId);
 
         if(post == null){
