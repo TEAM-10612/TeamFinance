@@ -48,8 +48,8 @@ public class PostApiController {
     @DeleteMapping("/{id}")
     @LoginCheck
     @ResponseStatus(HttpStatus.OK)
-    public void deletePost(@PathVariable long postId , @CurrentUser long id){
-        Post post = postRepository.findById(postId);
+    public void deletePost(@PathVariable Long postId , @CurrentUser Long id){
+        Post post = postRepository.findByPostId(postId);
         if(post.getAuthor().getId() != id){
             throw new UserMissMatchException();
         }
@@ -58,7 +58,7 @@ public class PostApiController {
 
     @PatchMapping("/{id}")
     @LoginCheck
-    public ResponseEntity<PostDto.SaveRequest> updatePost(@PathVariable long id,
+    public ResponseEntity<PostDto.SaveRequest> updatePost(@PathVariable Long id,
                                                           @Valid@RequestBody PostDto.SaveRequest request
             ,@Valid @Nullable @RequestBody MultipartFile multipartFile){
         updatePost(id,request,multipartFile);

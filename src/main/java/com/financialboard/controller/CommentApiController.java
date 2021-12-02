@@ -26,7 +26,7 @@ public class CommentApiController {
 
     @DeleteMapping("/{id}")
     @LoginCheck
-    public void deleteComment(@PathVariable long id){
+    public void deleteComment(@PathVariable Long id){
         commentService.deleteComment(id);
     }
 }

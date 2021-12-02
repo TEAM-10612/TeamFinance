@@ -16,13 +16,13 @@ public class LikesController {
 
     @PostMapping("/{postId}/likes")
     @LoginCheck
-    public void likes(@PathVariable long postId, @CurrentUser long id){
+    public void likes(@PathVariable Long postId, @CurrentUser Long id){
         likesService.likes(postId,id);
     }
 
     @DeleteMapping("/{postId}/unlikes")
     @LoginCheck
-    public void unlikes(@PathVariable long postId,@CurrentUser long id){
+    public void unlikes(@PathVariable Long postId,@CurrentUser Long id){
         likesService.unLikes(postId,id);
     }
 }
