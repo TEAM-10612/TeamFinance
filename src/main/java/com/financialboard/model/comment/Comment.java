@@ -27,7 +27,7 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    private String comment;
+    private String content;
 
     private LocalDateTime createTime;
 
@@ -37,9 +37,9 @@ public class Comment {
     }
 
     @Builder
-    public Comment(User author, Post post, String comment) {
+    public Comment(User author, Post post, String content) {
         this.author = author;
         this.post = post;
-        this.comment = comment;
+        this.content = content;
     }
 }

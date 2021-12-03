@@ -1,9 +1,8 @@
 package com.financialboard.controller;
 
 import com.financialboard.annotation.LoginCheck;
-import com.financialboard.dto.CommentDto;
 import com.financialboard.dto.CommentDto.AddCommentRequest;
-import com.financialboard.repository.CommentRepository;
+import com.financialboard.repository.comment.CommentRepository;
 import com.financialboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
