@@ -4,7 +4,7 @@ import com.financialboard.dto.PostDto;
 import com.financialboard.dto.PostDto.SaveRequest;
 import com.financialboard.exception.post.PostNotFoundException;
 import com.financialboard.model.post.Post;
-import com.financialboard.repository.PostRepository;
+import com.financialboard.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

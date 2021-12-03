@@ -34,7 +34,3 @@ public class CustomCommentRepositoryImpl implements CustomCommentRepository{
     }
 }
 
-//댓글 최신순으로 정렬
-//게시물 최신순으로 정렬 기능 구현
-//게시물 좋아요 많은 순으로 정렬 기능 구현
-//게시물 댓글많 은 순으로 정렬 구현

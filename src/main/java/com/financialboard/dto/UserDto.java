@@ -192,7 +192,6 @@ public class UserDto {
         private UserGrade userGrade;
 
         @Builder
-
         public UserSearch(Long id, String nickname, String email, UserLevel userLevel, UserGrade userGrade) {
             this.id = id;
             this.nickname = nickname;

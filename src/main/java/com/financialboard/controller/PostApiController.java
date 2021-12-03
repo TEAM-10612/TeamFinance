@@ -5,7 +5,7 @@ import com.financialboard.annotation.LoginCheck;
 import com.financialboard.dto.PostDto;
 import com.financialboard.exception.user.UserMissMatchException;
 import com.financialboard.model.post.Post;
-import com.financialboard.repository.PostRepository;
+import com.financialboard.repository.post.PostRepository;
 import com.financialboard.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
-import javax.ws.rs.Path;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor

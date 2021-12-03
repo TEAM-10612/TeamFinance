@@ -1,18 +1,11 @@
 package com.financialboard.service;
 
-import com.financialboard.exception.post.PostNotFoundException;
-import com.financialboard.exception.user.UserNotFoundException;
-import com.financialboard.model.likes.Likes;
-import com.financialboard.model.post.Post;
-import com.financialboard.model.user.User;
 import com.financialboard.repository.LikesRepository;
-import com.financialboard.repository.PostRepository;
+import com.financialboard.repository.post.PostRepository;
 import com.financialboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
