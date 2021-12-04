@@ -162,4 +162,42 @@ public class UserDto {
                     .build();
         }
     }
+
+    @Getter
+    @NoArgsConstructor
+    public static class UserListInfo{
+        private Long id;
+        private String nickname;
+        private String email;
+        private UserLevel userLevel;
+        private UserGrade userGrade;
+
+        @Builder
+
+        public UserListInfo(Long id, String nickname, String email, UserLevel userLevel, UserGrade userGrade) {
+            this.id = id;
+            this.nickname = nickname;
+            this.email = email;
+            this.userLevel = userLevel;
+            this.userGrade = userGrade;
+        }
+    }
+
+    @Getter
+    public static class UserSearch{
+        private Long id;
+        private String nickname;
+        private String email;
+        private UserLevel userLevel;
+        private UserGrade userGrade;
+
+        @Builder
+        public UserSearch(Long id, String nickname, String email, UserLevel userLevel, UserGrade userGrade) {
+            this.id = id;
+            this.nickname = nickname;
+            this.email = email;
+            this.userLevel = userLevel;
+            this.userGrade = userGrade;
+        }
+    }
 }

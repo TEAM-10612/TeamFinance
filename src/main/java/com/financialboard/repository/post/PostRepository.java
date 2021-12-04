@@ -1,4 +1,4 @@
-package com.financialboard.repository;
+package com.financialboard.repository.post;
 
 import com.financialboard.model.post.Post;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;

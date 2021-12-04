@@ -1,4 +1,4 @@
-package com.financialboard.repository;
+package com.financialboard.repository.comment;
 
 import com.financialboard.model.comment.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;

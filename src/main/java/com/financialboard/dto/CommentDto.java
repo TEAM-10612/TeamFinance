@@ -16,17 +16,34 @@ public class CommentDto {
     @Builder
     public static class AddCommentRequest{
 
-        private String comment;
+        private String content;
         private UserInfo author;
         private PostInsertComment post;
 
 
         public Comment toEntity(){
             return Comment.builder()
-                    .comment(this.comment)
+                    .content(this.content)
                     .author(this.author.toEntity())
                     .post(this.post.toEntity())
                     .build();
+        }
+    }
+
+    @Builder
+    @NoArgsConstructor
+    public static class ListComments{
+
+        private Long id;
+        private String content;
+        private UserInfo author;
+        private PostInsertComment post;
+
+        public ListComments(Long id, String content, UserInfo author, PostInsertComment post) {
+            this.id = id;
+            this.content = content;
+            this.author = author;
+            this.post = post;
         }
     }
 }
