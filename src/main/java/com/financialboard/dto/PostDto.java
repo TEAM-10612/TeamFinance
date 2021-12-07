@@ -77,7 +77,7 @@ public class PostDto {
     }
 
     @NoArgsConstructor
-    @Builder
+    @Getter
     public static class PostResponse{
         private Long id;
         private UserInfoDto author;
@@ -87,7 +87,7 @@ public class PostDto {
         private List<Likes> likesList = new ArrayList<>();
         private List<Comment> comments = new ArrayList<>();
 
-
+        @Builder
         public PostResponse(Long id, UserInfoDto author, String content,
                             CategoryInfo category, List<Likes> likesList, List<Comment> comments) {
             this.id = id;

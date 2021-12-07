@@ -1,10 +1,13 @@
 package com.financialboard.service;
 
 import com.financialboard.dto.UserDto;
+import com.financialboard.dto.UserDto.SaveRequest;
 import com.financialboard.encryption.EncryptionService;
 import com.financialboard.exception.user.*;
+import com.financialboard.model.post.Post;
 import com.financialboard.model.user.User;
 import com.financialboard.repository.UserRepository;
+import com.financialboard.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,19 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
     private final EncryptionService encryptionService;
 
     @Transactional
-    public void saveUser(UserDto.SaveRequest request){
+    public void saveUser(SaveRequest request){
         if(emailDuplicateCheck(request.getEmail())){
             throw new EmailDuplicateException();
         }
         if(nicknameDuplicateCheck(request.getNickname())){
             throw new NicknameDuplicateException();
         }
-
+        request.passwordEncryption(encryptionService);
         userRepository.save(request.toEntity());
-
     }
 
     @Transactional
@@ -39,7 +42,7 @@ public class UserService {
         if(!userRepository.existsByEmailAndPassword(email,encryptionService.encrypt(password))){
             throw new WrongPasswordException();
         }
-
+        postRepository.delete((Post) user.getPosts());
         userRepository.deleteByEmail(email);
     }
 
@@ -81,4 +84,6 @@ public class UserService {
 
         user.updatePassword(afterPassword);
     }
+
+
 }

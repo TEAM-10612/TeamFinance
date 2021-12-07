@@ -18,9 +18,9 @@ public class CommentApiController {
     @PostMapping
     @LoginCheck
     public void saveComment(@RequestBody AddCommentRequest request){
-        Long postId = request.getPost().getId();
-        Long userId = request.getAuthor().getId();
-        commentService.saveComment(postId,userId,request);
+        Long post = request.getPost().getId();
+        Long user = request.getAuthor().getId();
+        commentService.saveComment(post,user,request);
     }
 
     @DeleteMapping("/{id}")

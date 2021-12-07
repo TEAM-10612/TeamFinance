@@ -27,25 +27,25 @@ public class CommentService {
 
     @Transactional
     public void saveComment(long postId, long userId, AddCommentRequest request){
-        Post post = postRepository.findByPostId(postId);
+        Optional<Post> post = postRepository.findById(postId);
         Optional<User> user = userRepository.findById(userId);
 
-        if(post == null){
+        if(post.isEmpty()){
             throw new PostNotFoundException();
-        }else if (user == null){
+        }else if (user.isEmpty()){
             throw new UserNotFoundException("존재하지 않는 회원입니다.");
         }
         commentRepository.save(request.toEntity());
     }
 
     @Transactional
-    public void deleteComment(long commentId){
-        Optional<Comment> comment = commentRepository.findById(commentId);
+    public void deleteComment(long Id){
+        Optional<Comment> comment = commentRepository.findById(Id);
         if(comment == null){
             throw new CommentNotFoundException();
         }
 
-        commentRepository.deleteById(commentId);
+        commentRepository.deleteById(Id);
     }
 
 
