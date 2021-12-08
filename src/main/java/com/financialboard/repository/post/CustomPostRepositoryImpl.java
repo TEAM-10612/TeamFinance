@@ -2,7 +2,6 @@ package com.financialboard.repository.post;
 
 import com.financialboard.dto.PostDto;
 import com.financialboard.dto.PostDto.SearchPostResponse;
-import com.financialboard.model.post.Post;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,7 +12,7 @@ import java.util.List;
 import static com.financialboard.model.post.QPost.post;
 
 @RequiredArgsConstructor
-public class SearchPostRepositoryImpl implements SearchPostRepository{
+public class CustomPostRepositoryImpl implements CustomPostRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 

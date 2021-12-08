@@ -29,7 +29,7 @@ public class User extends UserBase {
 
     @Builder
     public User(Long id, String email, String password, UserLevel userLevel,UserGrade userGrade, String nickname, String phone) {
-        super(id, email, password, userLevel,userGrade);
+        super(id, email, password, phone,userLevel,userGrade);
         this.nickname = nickname;
     }
 
@@ -42,6 +42,7 @@ public class User extends UserBase {
                 .userGrade(this.getUserGrade())
                 .build();
     }
+
 
     public void updatePassword(String password){
         this.password = password;

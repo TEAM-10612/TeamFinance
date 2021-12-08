@@ -4,7 +4,7 @@ import com.financialboard.dto.PostDto;
 
 import java.util.List;
 
-public interface SearchPostRepository {
+public interface CustomPostRepository {
 
     List<PostDto.SearchPostResponse> searchPostList();
 

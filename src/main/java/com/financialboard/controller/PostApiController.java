@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,13 +46,8 @@ public class PostApiController {
 
     @DeleteMapping("/{id}")
     @LoginCheck
-    @ResponseStatus(HttpStatus.OK)
-    public void deletePost(@PathVariable Long postId , @CurrentUser Long id){
-        Post post = postRepository.findByPostId(postId);
-        if(post.getAuthor().getId() != id){
-            throw new UserMissMatchException();
-        }
-        postService.deletePost(postId,id);
+    public void deletePost(@PathVariable Long id , @CurrentUser Long userid){
+        postService.deletePost(id,userid);
     }
 
     @PatchMapping("/{id}")

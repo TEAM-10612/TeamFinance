@@ -23,6 +23,8 @@ public class UserBase extends BaseTimeEntity{
 
     protected String password;
 
+    protected  String phone;
+
     @Enumerated(EnumType.STRING)
     protected UserLevel userLevel;
 

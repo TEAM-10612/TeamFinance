@@ -34,13 +34,17 @@ public class UserDto {
         private String nickname;
 
 
+        private String phone;
 
+        public void passwordEncryption(EncryptionService em){
+            this.password = em.encrypt(password);
+        }
         @Builder
         public SaveRequest(String email, String password, String nickname, String phone) {
             this.email = email;
             this.password = password;
             this.nickname = nickname;
-
+            this.phone = phone;
         }
 
         public User toEntity(){
@@ -48,6 +52,9 @@ public class UserDto {
                     .email(this.email)
                     .password(this.password)
                     .nickname(this.nickname)
+                    .phone(this.phone)
+                    .userGrade(UserGrade.BRONZE)
+                    .userLevel(UserLevel.USER)
                     .build();
         }
     }

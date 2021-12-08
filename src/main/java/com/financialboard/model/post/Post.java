@@ -39,7 +39,6 @@ public class Post {
     private Category category;
 
     @OneToMany(mappedBy = "post" , fetch = FetchType.LAZY)
-    @OrderBy("id")
     @JsonIgnoreProperties({"post"})
     private List<Comment> comments = new ArrayList<>();
 
