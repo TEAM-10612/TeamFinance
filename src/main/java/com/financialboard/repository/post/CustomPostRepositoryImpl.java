@@ -4,11 +4,13 @@ import com.financialboard.dto.PostDto;
 import com.financialboard.dto.PostDto.SearchPostResponse;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import static com.financialboard.model.category.QCategory.category;
 import static com.financialboard.model.post.QPost.post;
 
 @RequiredArgsConstructor
@@ -86,6 +88,12 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
 
         List<PostDto.PostResponse> likeDescPost = results.getResults();
         return likeDescPost;
+    }
+
+
+
+    public BooleanExpression categoryIdEq(Long categoryId){
+        return categoryId != null ? category.id.eq(categoryId) : null;
     }
 
 }

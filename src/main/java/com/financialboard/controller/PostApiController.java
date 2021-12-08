@@ -36,13 +36,13 @@ public class PostApiController {
         return ResponseEntity.ok(request);
     }
 
-    @GetMapping("/{id}")
-    @LoginCheck
-    public ResponseEntity<PostDto.PostInfoResponse> getPost(@PathVariable long id){
-        PostDto.PostInfoResponse postInfo = postService.getPostInfo(id);
-
-        return ResponseEntity.ok(postInfo);
-    }
+//    @GetMapping("/{id}")
+//    @LoginCheck
+//    public ResponseEntity<PostDto.PostInfoResponse> getPost(@PathVariable long id){
+//        PostDto.PostInfoResponse postInfo = postService.getPostInfo(id);
+//
+//        return ResponseEntity.ok(postInfo);
+//    }
 
     @DeleteMapping("/{id}")
     @LoginCheck

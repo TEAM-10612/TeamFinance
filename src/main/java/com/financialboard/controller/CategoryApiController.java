@@ -1,11 +1,6 @@
 package com.financialboard.controller;
 
-import com.financialboard.annotation.LoginCheck;
-
-import com.financialboard.exception.category.NotFoundCategoryException;
-import com.financialboard.model.category.Category;
-import com.financialboard.model.user.UserLevel;
-import com.financialboard.repository.CategoryRepository;
+import com.financialboard.dto.CategoryDto;
 import com.financialboard.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.util.Map;
-import java.util.Optional;
-
+import static com.financialboard.dto.CategoryDto.*;
 import static com.financialboard.util.ResponseConstants.OK;
 
 @RestController
@@ -23,4 +16,11 @@ import static com.financialboard.util.ResponseConstants.OK;
 @RequestMapping("/categories")
 public class CategoryApiController {
 
+    private final CategoryService categoryService;
+
+    @PostMapping
+    public ResponseEntity<Void> saveCategory(@Valid@RequestBody SaveRequest request){
+        categoryService.createCategory(request);
+        return OK;
+    }
 }
