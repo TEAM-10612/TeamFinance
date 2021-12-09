@@ -2,6 +2,7 @@ package com.financialboard.model.category;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.financialboard.dto.CategoryDto;
+import com.financialboard.dto.CategoryDto.SaveRequest;
 import com.financialboard.model.post.Post;
 import lombok.*;
 
@@ -51,5 +52,10 @@ public class Category {
                         ))
                 )
                 .build();
+    }
+
+    public void update(SaveRequest request){
+        this.categoryName = request.getCategoryName();
+        this.parentCategory = request.toEntity().getParentCategory();
     }
 }

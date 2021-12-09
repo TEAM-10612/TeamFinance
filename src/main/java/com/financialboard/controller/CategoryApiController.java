@@ -31,4 +31,14 @@ public class CategoryApiController {
         return categoryService.getCategoryById(categoryId);
     }
 
+    @PatchMapping("/{id}")
+    public void updateCategory(@PathVariable(name = "id") Long id,
+                               @Valid@RequestBody SaveRequest request){
+        categoryService.updateCategory(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable(name = "id")Long id){
+        categoryService.deleteCategory(id);
+    }
 }

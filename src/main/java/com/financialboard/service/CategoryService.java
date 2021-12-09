@@ -1,6 +1,7 @@
 package com.financialboard.service;
 
 
+import com.financialboard.exception.ParentCategoryException;
 import com.financialboard.model.category.Category;
 import com.financialboard.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +60,23 @@ public class CategoryService {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 카테고리가 존재하지 않음"))
                 .toCategoryResponse();
+    }
+
+    @Transactional
+    public void updateCategory(Long id,SaveRequest request){
+        Category category = categoryRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        category.update(request);
+    }
+
+    @Transactional
+    public void deleteCategory(Long id){
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(IllegalArgumentException::new);
+
+        if (category.getParentCategory() == null){
+            throw new ParentCategoryException();
+        }
+        categoryRepository.deleteById(id);
     }
 }
