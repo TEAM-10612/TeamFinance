@@ -4,8 +4,12 @@ import com.financialboard.model.category.Category;
 import com.financialboard.model.post.Post;
 import lombok.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 
 public class CategoryDto {
@@ -36,32 +40,41 @@ public class CategoryDto {
 
 
     @Getter
-    @Setter
+    @NoArgsConstructor
     public static class CategoryInfo{
-
+        private Long id;
         private String categoryName;
-        private Category parentCategory;
-        private List<Category> subCategory;
-        private List<Post> posts;
+        private String parentCategory;//private Map<String,CategoryInfo> subCategory;
 
 
-        public CategoryInfo(String categoryName, Category parentCategory, List<Category> subCategory, List<Post> posts) {
-            this.categoryName = categoryName;
-            this.parentCategory = parentCategory;
-            this.subCategory = subCategory;
-            this.posts = posts;
+        public CategoryInfo(Category category) {
+            this.id = category.getId();
+            this.categoryName = category.getCategoryName();
+            this.parentCategory = category.getParentCategory().getCategoryName();
         }
 
         public Category toEntity(){
             Category category = Category.builder()
                     .categoryName(categoryName)
-                    .parentCategory(parentCategory)
-                    .childCategory(subCategory)
-                    .posts(posts)
                     .build();
 
             return category;
         }
 
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @Builder
+    public static class CategoryResponse{
+        private Long id;
+        private String categoryName;
+        private Map<String,CategoryInfo> subCategory=new HashMap<>();
+
+        public CategoryResponse(Long id, String categoryName, Map<String, CategoryInfo> subCategory) {
+            this.id = id;
+            this.categoryName = categoryName;
+            this.subCategory = subCategory;
+        }
     }
 }

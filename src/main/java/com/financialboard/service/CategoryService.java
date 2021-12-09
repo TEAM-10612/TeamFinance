@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.financialboard.dto.CategoryDto.*;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.reducing;
@@ -43,7 +45,19 @@ public class CategoryService {
             parentCategory.getChildCategory().add(request.toEntity());
             categoryRepository.save(category);
         }
+    }
 
+    @Transactional(readOnly = true)
+    public List<Category> categories(){
+        List<Category> categories = categoryRepository.findAll();
 
+        return categories;
+    }
+
+    @Transactional(readOnly = true)
+    public CategoryResponse getCategoryById(Long id){
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("찾는 카테고리가 존재하지 않음"))
+                .toCategoryResponse();
     }
 }

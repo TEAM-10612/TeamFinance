@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -26,7 +27,7 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category parentCategory;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentCategory")
+    @OneToMany(mappedBy = "parentCategory")
     private List<Category>childCategory =new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy ="category")
@@ -38,5 +39,17 @@ public class Category {
         this.parentCategory = parentCategory;
         this.childCategory = childCategory;
         this.posts = posts;
+    }
+
+    public CategoryDto.CategoryResponse toCategoryResponse(){
+        return CategoryDto.CategoryResponse.builder()
+                .id(this.id)
+                .categoryName(this.categoryName)
+                .subCategory(
+                        this.childCategory.stream().collect(Collectors.toMap(
+                                Category::getCategoryName, CategoryDto.CategoryInfo::new
+                        ))
+                )
+                .build();
     }
 }
