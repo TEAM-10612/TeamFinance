@@ -31,7 +31,7 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory")
     private List<Category>childCategory =new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy ="category")
+    @OneToMany(mappedBy ="category")
     private List<Post> posts = new ArrayList<>();
 
     @Builder

@@ -27,18 +27,22 @@ public class CategoryApiController {
     }
 
     @GetMapping("/{id}")
-    public CategoryResponse getCategoryById(@PathVariable(name = "id") Long categoryId){
-        return categoryService.getCategoryById(categoryId);
+    public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable(name = "id") Long categoryId){
+        CategoryResponse categoryById = categoryService.getCategoryById(categoryId);
+        return ResponseEntity.ok().body(categoryById);
     }
 
     @PatchMapping("/{id}")
-    public void updateCategory(@PathVariable(name = "id") Long id,
+    public ResponseEntity<Void> updateCategory(@PathVariable(name = "id") Long id,
                                @Valid@RequestBody SaveRequest request){
         categoryService.updateCategory(id, request);
+
+        return OK;
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable(name = "id")Long id){
+    public ResponseEntity<Void> deleteCategory(@PathVariable(name = "id")Long id){
         categoryService.deleteCategory(id);
+        return OK;
     }
 }

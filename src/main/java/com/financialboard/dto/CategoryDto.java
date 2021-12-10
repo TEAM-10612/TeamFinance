@@ -44,9 +44,9 @@ public class CategoryDto {
     public static class CategoryInfo{
         private Long id;
         private String categoryName;
-        private String parentCategory;//private Map<String,CategoryInfo> subCategory;
+        private String parentCategory;
 
-
+        @Builder
         public CategoryInfo(Category category) {
             this.id = category.getId();
             this.categoryName = category.getCategoryName();

@@ -1,7 +1,7 @@
 package com.financialboard.service;
 
 
-import com.financialboard.exception.ParentCategoryException;
+import com.financialboard.exception.ChildCategoryException;
 import com.financialboard.model.category.Category;
 import com.financialboard.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,6 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-
     @Transactional
     public void createCategory(SaveRequest request){
         Boolean existByName = categoryRepository.existsByCategoryName(request.getCategoryName());
@@ -31,7 +30,7 @@ public class CategoryService {
         if (request.getParentCategory() == null){
             SaveRequest rootCategory = SaveRequest.builder()
                     .categoryName(request.getCategoryName())
-                    .parentCategory(null)
+                    .parentCategory("대분류")
                     .build();
 
             categoryRepository.save(rootCategory.toEntity());
@@ -57,9 +56,10 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public CategoryResponse getCategoryById(Long id){
-        return categoryRepository.findById(id)
+        CategoryResponse response = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("찾는 카테고리가 존재하지 않음"))
                 .toCategoryResponse();
+        return response;
     }
 
     @Transactional
@@ -74,9 +74,6 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
 
-        if (category.getParentCategory() == null){
-            throw new ParentCategoryException();
-        }
         categoryRepository.deleteById(id);
     }
 }
