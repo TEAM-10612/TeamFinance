@@ -38,8 +38,6 @@ public class PostDto {
 
         private String postImgUrl;
 
-
-
         @NotBlank
         private CategoryInfo categoryInfo;
 
@@ -53,7 +51,6 @@ public class PostDto {
                     .title(this.title)
                     .content(this.content)
                     .postImgUrl(this.postImgUrl)
-                    .category(this.categoryInfo.toEntity())
                     .build();
         }
 
@@ -78,7 +75,7 @@ public class PostDto {
 
     @NoArgsConstructor
     @Getter
-    public static class PostResponse{
+    public static class PostResponse {
         private Long id;
         private UserInfoDto author;
         private String title;
@@ -88,15 +85,28 @@ public class PostDto {
         private List<Comment> comments = new ArrayList<>();
 
         @Builder
-        public PostResponse(Long id, UserInfoDto author, String content,
+        public PostResponse(Long id, UserInfoDto author, String title, String content,
                             CategoryInfo category, List<Likes> likesList, List<Comment> comments) {
             this.id = id;
             this.author = author;
+            this.title = title;
             this.content = content;
             this.category = category;
             this.likesList = likesList;
             this.comments = comments;
         }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class PostList{
+        private Long id;
+        private UserDto.UserPostInfo author;
+        private String title;
+        private CategoryInfo categoryInfo;
+
     }
 
     @Getter
@@ -117,7 +127,6 @@ public class PostDto {
                     .title(this.title)
                     .content(this.content)
                     .postImgUrl(this.postImageUrl)
-                    .category(this.category.toEntity())
                     .build();
         }
     }

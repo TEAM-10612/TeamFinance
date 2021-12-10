@@ -1,89 +1,94 @@
 package com.financialboard.service;
 
 import com.financialboard.dto.CategoryDto;
-import com.financialboard.dto.CategoryDto.CategoryInfo;
-import com.financialboard.exception.category.NotFoundCategoryException;
 import com.financialboard.model.category.Category;
 import com.financialboard.repository.CategoryRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
-@SpringBootTest
-@Transactional
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 class CategoryServiceTest {
-    
-    @Autowired
+
+    @InjectMocks
     CategoryService categoryService;
-    
-    @Autowired
+    @Mock
     CategoryRepository categoryRepository;
 
-    private CategoryInfo createCategoryInfo(String testBranch,String testCode,String testName){
-        CategoryInfo categoryInfo = new CategoryInfo();
-        categoryInfo.setBranch(testBranch);
-        categoryInfo.setCode(testCode);
-        categoryInfo.setName(testName);
-        return categoryInfo;
+
+
+    public CategoryDto.SaveRequest request1(){
+        return CategoryDto.SaveRequest.builder()
+                .categoryName("category1")
+                .parentCategory(null)
+
+                .build();
     }
 
-    private Category findCategory(Long saveId){
-        return categoryRepository.findById(saveId).orElseThrow(IllegalArgumentException::new);
-    }
-    
-    @Test
-    void 카테고리_저장()throws Exception{
-        //given
-        CategoryInfo   categoryInfo = createCategoryInfo("TestBranch","TestCode","TestName");
-        Long saveId = categoryService.saveCategory(categoryInfo);
-
-        //when
-        Category category = findCategory(saveId);
-
-        //then
-        assertThat(category.getCode()).isEqualTo("TestCode");
-    
+    public CategoryDto.SaveRequest request2(){
+        return CategoryDto.SaveRequest.builder()
+                .categoryName("category2")
+                .parentCategory(request1().getCategoryName())
+                .build();
     }
 
     @Test
-    void 카테고리_삭제 ()throws Exception{
+    @DisplayName("카테고리 생성")
+    void save_category()throws Exception{
         //given
-        CategoryInfo categoryInfo = createCategoryInfo("TestBranch","TestCode","TestName");
-        Long saveId = categoryService.saveCategory(categoryInfo);
+        CategoryDto.SaveRequest request1 = request1();
 
         //when
-        categoryService.deleteCategoryOld(saveId);
+        when(categoryRepository.existsByCategoryName(request1.getCategoryName()))
+                .thenReturn(false);
+        categoryService.createCategory(request1);
 
         //then
-        IllegalArgumentException e =
-                assertThrows(IllegalArgumentException.class,
-                        () -> categoryService.findCategoryOld(saveId));
-        assertThat(e.getMessage()).isEqualTo("찾는 카테고리 없습니다.");
+        Assertions.assertThat(request1.getCategoryName()).isEqualTo(request1().getCategoryName());
+        Assertions.assertThat(request1.getParentCategory()).isEqualTo(null);
 
     }
 
     @Test
-    void 카테고리_업데이트()throws Exception {
+    @DisplayName("카테고리 수정")
+    void update_category()throws Exception{
         //given
-        CategoryInfo categoryInfo = createCategoryInfo("TestBranch","TestCode","TestName");
-        Long saveId = categoryService.saveCategory(categoryInfo);
-
-        Category category = findCategory(saveId);
-        CategoryInfo targetCategory = new CategoryInfo(category);
-        targetCategory.setName("UpdateCategory");
+        Category category = request1().toEntity();
+        Long id = category.getId();
 
         //when
-        Long updateId = categoryService.updateCategory("TestBranch","TestCode",targetCategory);
-        Category updateCategory =  findCategory(saveId);
+        when(categoryRepository.findById(id)).thenReturn(Optional.of(category));
+        categoryService.updateCategory(id,request2());
 
         //then
-        assertThat(updateCategory.getName()).isEqualTo("UpdateCategory");
+        Assertions.assertThat(category.getCategoryName()).isEqualTo(request2().getCategoryName());
+    }
+
+    @Test
+    @DisplayName("카테고리 삭제")
+    void delete_category()throws Exception{
+        //given
+        Category category = request1().toEntity();
+        Long id = category.getId();
+
+        //when
+        when(categoryRepository.findById(id)).thenReturn(Optional.of(category));
+        categoryService.deleteCategory(id);
+
+        //then
+        verify(categoryRepository,atLeastOnce()).deleteById(id);
 
     }
+
 }
