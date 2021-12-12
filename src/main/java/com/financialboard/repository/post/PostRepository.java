@@ -10,7 +10,7 @@ import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
-public interface PostRepository extends JpaRepository<Post,Long> {
+public interface PostRepository extends JpaRepository<Post,Long>,CustomPostRepository {
 
     Optional<Post>findById(long id);
 }

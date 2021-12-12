@@ -27,6 +27,7 @@ public class CustomCommentRepositoryImpl implements CustomCommentRepository{
                         comment.author,
                         comment.post
                 ))
+                .from(comment)
                 .orderBy(comment.id.desc())
                 .fetchResults();
         List<ListComments> result = results.getResults();

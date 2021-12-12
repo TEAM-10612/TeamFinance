@@ -8,6 +8,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
@@ -20,27 +21,15 @@ import static com.financialboard.model.post.QPost.post;
 public class CustomCategoryRepositoryImpl implements CustomCategoryRepository{
 
     private final JPAQueryFactory jpaQueryFactory;
+
+
     @Override
-    public List<PostList> getPosts() {
-        QueryResults<PostList> results = jpaQueryFactory
-                .select(Projections.fields(PostList.class,
-                        post.id,
-                        post.author,
-                        post.title,
-                        post.category
-                        ))
-                .from(category)
-                .leftJoin(category.posts, post)
-                .groupBy(post.id)
-                .orderBy(
-                       post.id.desc()
-                )
-                .fetchResults();
-
-        List<PostList> postLists = results.getResults();
-
-        return postLists;
+    public Page<PostList> getPosts(Pageable pageable, PostList postList) {
+        return null;
     }
 
-
+    @Override
+    public Page<PostList> maxPostCategory(Pageable pageable, PostList postList) {
+        return null;
+    }
 }

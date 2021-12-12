@@ -2,16 +2,10 @@ package com.financialboard.repository.post;
 
 import com.financialboard.dto.PostDto;
 import com.financialboard.dto.PostDto.SearchPostResponse;
-import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
-
-import static com.financialboard.model.category.QCategory.category;
-import static com.financialboard.model.post.QPost.post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RequiredArgsConstructor
 public class CustomPostRepositoryImpl implements CustomPostRepository {
@@ -19,81 +13,22 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<SearchPostResponse> searchPostList() {
-       QueryResults<SearchPostResponse>results = jpaQueryFactory
-               .select(Projections.fields(SearchPostResponse.class,
-                post.id,
-                post.author,
-                post.title,
-                post.content,
-                post.comments
-               ))
-               .from(post)
-               .groupBy(post)
-               .fetchResults();
-
-       List<SearchPostResponse> postResponseList = results.getResults();
-       return postResponseList;
+    public Page<SearchPostResponse> searchPostList(Pageable pageable, SearchPostResponse searchPostResponse) {
+        return null;
     }
 
     @Override
-    public List<PostDto.PostResponse> latestSortPost() {
-        QueryResults<PostDto.PostResponse> results = jpaQueryFactory
-                .select(Projections.fields(PostDto.PostResponse.class,
-                        post.id,
-                        post.author,
-                        post.title,
-                        post.content,
-                        post.category,
-                        post.likesList,
-                        post.comments))
-                .orderBy(post.id.desc())
-                .fetchResults();
-
-        List<PostDto.PostResponse> postResponseList = results.getResults();
-        return postResponseList;
+    public Page<PostDto.PostResponse> latestSortPost(Pageable pageable, PostDto.PostResponse postResponse) {
+        return null;
     }
 
     @Override
-    public List<PostDto.PostResponse> sortMaxComment() {
-        QueryResults<PostDto.PostResponse> results = jpaQueryFactory
-                .select(Projections.fields(PostDto.PostResponse.class,
-                        post.id,
-                        post.author,
-                        post.title,
-                        post.content,
-                        post.category,
-                        post.likesList,
-                        post.comments))
-                .orderBy(post.comments.size().desc())
-                .fetchResults();
-
-        List<PostDto.PostResponse> commentDescPost = results.getResults();
-        return commentDescPost;
+    public Page<PostDto.PostResponse> sortMaxComment(Pageable pageable, PostDto.PostResponse postResponse) {
+        return null;
     }
 
     @Override
-    public List<PostDto.PostResponse> sortMaxLikes() {
-        QueryResults<PostDto.PostResponse> results = jpaQueryFactory
-                .select(Projections.fields(PostDto.PostResponse.class,
-                        post.id,
-                        post.author,
-                        post.title,
-                        post.content,
-                        post.category,
-                        post.likesList,
-                        post.comments))
-                .orderBy(post.likesList.size().desc())
-                .fetchResults();
-
-        List<PostDto.PostResponse> likeDescPost = results.getResults();
-        return likeDescPost;
+    public Page<PostDto.PostResponse> sortMaxLikes(Pageable pageable, PostDto.PostResponse postResponse) {
+        return null;
     }
-
-
-
-    public BooleanExpression categoryIdEq(Long categoryId){
-        return categoryId != null ? category.id.eq(categoryId) : null;
-    }
-
 }

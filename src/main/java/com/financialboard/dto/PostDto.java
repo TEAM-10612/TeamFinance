@@ -51,6 +51,7 @@ public class PostDto {
                     .title(this.title)
                     .content(this.content)
                     .postImgUrl(this.postImgUrl)
+                    .category(this.categoryInfo.toEntity())
                     .build();
         }
 
