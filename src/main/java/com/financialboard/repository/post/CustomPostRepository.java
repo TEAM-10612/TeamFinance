@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 public interface CustomPostRepository {
 
-    Page<PostDto.SearchPostResponse> searchPostList(Pageable pageable, PostDto.SearchPostResponse postResponse);
-    Page<PostDto.PostResponse> latestSortPost(Pageable pageable, PostDto.PostResponse postResponse);
-    Page<PostDto.PostResponse> sortMaxComment(Pageable pageable, PostDto.PostResponse postResponse);
-    Page<PostDto.PostResponse> sortMaxLikes(Pageable pageable, PostDto.PostResponse postResponse);
+    Page<PostDto.SearchPostResponse> searchPostList(Pageable pageable, PostDto.SearchCondition postResponse);
+    Page<PostDto.SearchPostResponse> getCategoryByPost(Pageable pageable, PostDto.SearchConditionByCategory searchConditionByCategory);
 }

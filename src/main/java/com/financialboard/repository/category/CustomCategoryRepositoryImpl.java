@@ -1,8 +1,8 @@
 package com.financialboard.repository.category;
 
-import com.financialboard.dto.PostDto.PostList;
-import com.financialboard.model.post.Post;
-import com.financialboard.model.post.QPost;
+import com.financialboard.dto.CategoryDto;
+import com.financialboard.dto.CategoryDto.CategoryResponse;
+
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
@@ -23,13 +23,25 @@ public class CustomCategoryRepositoryImpl implements CustomCategoryRepository{
     private final JPAQueryFactory jpaQueryFactory;
 
 
-    @Override
-    public Page<PostList> getPosts(Pageable pageable, PostList postList) {
-        return null;
-    }
 
     @Override
-    public Page<PostList> maxPostCategory(Pageable pageable, PostList postList) {
-        return null;
+    public Page<CategoryResponse> maxPostCategory(Pageable pageable) {
+        QueryResults<CategoryResponse> results = jpaQueryFactory
+                .select(Projections.fields(CategoryResponse.class,
+                        category.id,
+                        category.categoryName,
+                        category.childCategory
+                        ))
+                .from(category)
+                .orderBy(
+                        category.posts.size().desc()
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+        List<CategoryResponse> responses = results.getResults();
+        long total = results.getTotal();
+
+        return new PageImpl<>(responses,pageable,total);
     }
 }
