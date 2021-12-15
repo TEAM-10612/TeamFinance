@@ -7,6 +7,7 @@ import com.financialboard.dto.UserDto.UserInfoDto;
 import com.financialboard.model.comment.Comment;
 import com.financialboard.model.likes.Likes;
 import com.financialboard.model.post.Post;
+import com.financialboard.model.post.PostStandard;
 import com.financialboard.model.user.User;
 import lombok.*;
 import net.bytebuddy.agent.builder.AgentBuilder;
@@ -15,6 +16,8 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.financialboard.dto.CategoryDto.*;
 
 @Getter
 @Builder
@@ -51,6 +54,7 @@ public class PostDto {
                     .title(this.title)
                     .content(this.content)
                     .postImgUrl(this.postImgUrl)
+                    .category(this.categoryInfo.toEntity())
                     .build();
         }
 
@@ -97,17 +101,7 @@ public class PostDto {
         }
     }
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class PostList{
-        private Long id;
-        private UserDto.UserPostInfo author;
-        private String title;
-        private CategoryInfo categoryInfo;
 
-    }
 
     @Getter
     @NoArgsConstructor
@@ -137,19 +131,38 @@ public class PostDto {
         private Long id;
         private UserDto.UserPostInfo author;
         private String title;
-        private String content;
+        private CategoryByPostResponse category;
         private List<Comment>comments = new ArrayList<>();
+        private List<Likes>likesList = new ArrayList<>();
 
         @Builder
 
-        public SearchPostResponse(Long id, UserDto.UserPostInfo author,
-                                  String title, String content, List<Comment> comments) {
+        public SearchPostResponse(Long id, UserDto.UserPostInfo author, String title,
+                                  CategoryByPostResponse category, List<Comment> comments, List<Likes> likesList) {
             this.id = id;
             this.author = author;
             this.title = title;
-            this.content = content;
+            this.category = category;
             this.comments = comments;
+            this.likesList = likesList;
         }
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SearchCondition{
+        private String keyword;
+        private PostStandard orderStandard;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SearchConditionByCategory{
+        private Long categoryId;
     }
 
 }

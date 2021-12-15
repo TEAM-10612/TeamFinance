@@ -27,25 +27,19 @@ public class CommentService {
 
     @Transactional
     public void saveComment(long postId, long userId, AddCommentRequest request){
-        Optional<Post> post = postRepository.findById(postId);
-        Optional<User> user = userRepository.findById(userId);
-
-        if(post.isEmpty()){
-            throw new PostNotFoundException();
-        }else if (user.isEmpty()){
-            throw new UserNotFoundException("존재하지 않는 회원입니다.");
-        }
+        Post post = postRepository.findById(postId)
+                .orElseThrow(PostNotFoundException::new);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->new UserNotFoundException("존재하지 않는 회원입니다."));
+        post.getComments().add(request.toEntity());
         commentRepository.save(request.toEntity());
     }
 
     @Transactional
-    public void deleteComment(long Id){
-        Optional<Comment> comment = commentRepository.findById(Id);
-        if(comment == null){
-            throw new CommentNotFoundException();
-        }
-
-        commentRepository.deleteById(Id);
+    public void deleteComment(long id){
+        Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
+        comment.getPost().getComments().remove(comment);
+        commentRepository.deleteById(id);
     }
 
 

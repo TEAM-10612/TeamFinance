@@ -1,5 +1,6 @@
 package com.financialboard.service;
 
+import com.financialboard.dto.PostDto;
 import com.financialboard.dto.PostDto.SaveRequest;
 import com.financialboard.exception.post.PostNotFoundException;
 import com.financialboard.model.post.Post;
@@ -7,11 +8,14 @@ import com.financialboard.repository.CategoryRepository;
 import com.financialboard.repository.post.CustomPostRepository;
 import com.financialboard.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +62,13 @@ public class PostService {
 
 
     }
+
+    public Page<PostDto.SearchPostResponse> getPostsByCategory(Pageable pageable,Long categoryId){
+        Page<PostDto.SearchPostResponse> categoryByPost = postRepository.getCategoryByPost(pageable, categoryId);
+
+        return categoryByPost;
+    }
+
     private boolean isDeleteSavedImage(String savedImagePath, String updatedImagePath,
                                        MultipartFile productImage) {
         return ((updatedImagePath == null && savedImagePath != null) ||

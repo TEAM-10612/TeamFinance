@@ -77,4 +77,17 @@ public class CategoryDto {
             this.subCategory = subCategory;
         }
     }
+
+    @Getter
+    @NoArgsConstructor
+    @Builder
+    public static class CategoryByPostResponse{
+        private Long id;
+        private String categoryName;
+
+        public CategoryByPostResponse(Long id, String categoryName) {
+            this.id = id;
+            this.categoryName = categoryName;
+        }
+    }
 }

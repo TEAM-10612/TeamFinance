@@ -5,6 +5,7 @@ import com.financialboard.dto.PostDto;
 import com.financialboard.model.category.Category;
 import com.financialboard.model.comment.Comment;
 import com.financialboard.model.likes.Likes;
+import com.financialboard.model.user.BaseTimeEntity;
 import com.financialboard.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class Post extends BaseTimeEntity {
 
     @Id@GeneratedValue
     @Column(name = "post_id")
