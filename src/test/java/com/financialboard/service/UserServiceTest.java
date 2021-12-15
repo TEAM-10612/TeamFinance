@@ -46,11 +46,6 @@ class UserServiceTest {
     @InjectMocks
     UserService userService;
 
-//    @AfterEach
-//    public void deleteData(){
-//        userRepository.deleteAll();
-//    }
-
     @BeforeEach
     public void saveUser(){
         userService.saveUser(createUser());

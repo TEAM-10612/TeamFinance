@@ -10,7 +10,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.agent.builder.AgentBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +27,7 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<SearchPostResponse> searchPostList(Pageable pageable, PostDto.SearchCondition condition) {
+    public Page<SearchPostResponse> searchPostList(boolean useSearchBtn,Pageable pageable, PostDto.SearchCondition condition) {
         QueryResults<SearchPostResponse>results = jpaQueryFactory
                 .select(Projections.fields(SearchPostResponse.class,
                         post.id,
@@ -54,7 +53,7 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
     }
 
     @Override
-    public Page<SearchPostResponse> getCategoryByPost(Pageable pageable, PostDto.SearchConditionByCategory searchConditionByCategory) {
+    public Page<SearchPostResponse> getCategoryByPost(Pageable pageable, Long id) {
         QueryResults<SearchPostResponse> results = jpaQueryFactory
                 .select(Projections.fields(SearchPostResponse.class,
                         post.id,
@@ -66,7 +65,7 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
                 ))
                 .from(post)
                 .where(
-                        getCategoryId(searchConditionByCategory.getCategoryId())
+                        getCategoryId(id)
                 )
                 .orderBy(post.createTime.desc())
                 .offset(pageable.getOffset())
@@ -78,6 +77,30 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
 
         return new PageImpl<>(postResponses,pageable,total);
 
+    }
+
+    @Override
+    public Page<SearchPostResponse> postBySort(Pageable pageable, PostStandard postStandard) {
+        QueryResults<SearchPostResponse> results = jpaQueryFactory
+                .select(Projections.fields(SearchPostResponse.class,
+                        post.id,
+                        post.title,
+                        post.author,
+                        post.category,
+                        post.comments,
+                        post.likesList
+                ))
+                .from(post)
+                .orderBy(
+                        getOrderSpecifier(postStandard)
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+        List<SearchPostResponse> responses = results.getResults();
+        long total = results.getTotal();
+
+        return new PageImpl<>(responses,pageable,total);
     }
 
     private OrderSpecifier getOrderSpecifier(PostStandard postStandard){
