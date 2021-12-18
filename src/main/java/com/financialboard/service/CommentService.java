@@ -31,14 +31,12 @@ public class CommentService {
                 .orElseThrow(PostNotFoundException::new);
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->new UserNotFoundException("존재하지 않는 회원입니다."));
-        post.getComments().add(request.toEntity());
         commentRepository.save(request.toEntity());
     }
 
     @Transactional
     public void deleteComment(long id){
         Comment comment = commentRepository.findById(id).orElseThrow(CommentNotFoundException::new);
-        comment.getPost().getComments().remove(comment);
         commentRepository.deleteById(id);
     }
 
