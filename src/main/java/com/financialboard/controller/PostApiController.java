@@ -19,13 +19,12 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/posts")
 public class PostApiController {
 
     private final PostService postService;
     private final PostRepository postRepository;
 
-    @PostMapping
+    @PostMapping("/posts/save")
     @LoginCheck
     public ResponseEntity<PostDto.SaveRequest> savePost(
             @Valid@RequestBody PostDto.SaveRequest request,
@@ -36,21 +35,13 @@ public class PostApiController {
         return ResponseEntity.ok(request);
     }
 
-//    @GetMapping("/{id}")
-//    @LoginCheck
-//    public ResponseEntity<PostDto.PostInfoResponse> getPost(@PathVariable long id){
-//        PostDto.PostInfoResponse postInfo = postService.getPostInfo(id);
-//
-//        return ResponseEntity.ok(postInfo);
-//    }
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/posts/{id}")
     @LoginCheck
     public void deletePost(@PathVariable Long id , @CurrentUser Long userid){
         postService.deletePost(id,userid);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/posts/{id}")
     @LoginCheck
     public ResponseEntity<PostDto.SaveRequest> updatePost(@PathVariable Long id,
                                                           @Valid@RequestBody PostDto.SaveRequest request
@@ -60,5 +51,11 @@ public class PostApiController {
         return ResponseEntity.ok(request);
     }
 
+
+
+    @GetMapping("/{id}")
+    @LoginCheck
+    public void getPost(@PathVariable long id){
+    }
 
 }

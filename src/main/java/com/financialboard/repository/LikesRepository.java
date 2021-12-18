@@ -12,12 +12,4 @@ import java.util.Optional;
 
 public interface LikesRepository extends JpaRepository<Likes,Long>{
     Optional<Likes> findByUserAndPost(User user, Post post);
-
-    @Modifying
-    @Query(value = "INSERT INTO likes(post_id,user_id) VALUES(:postId, :userId)",nativeQuery = true)
-    void likes(long postId,long userId);
-
-    @Modifying
-    @Query(value = "DELETE FROM likes WHERE post_id = :postId AND user_id = :userId",nativeQuery = true)
-    void unlikes(long postId,long userId);
 }

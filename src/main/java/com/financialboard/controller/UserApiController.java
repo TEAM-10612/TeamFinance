@@ -66,9 +66,9 @@ public class UserApiController {
      * @return
      */
     @LoginCheck
-    @GetMapping("/my-infos")
-    public ResponseEntity<UserDto.UserInfoDto> myPage(@CurrentUser String email) {
-        UserDto.UserInfoDto loginUser = sessionLoginService.getCurrentUser(email);
+    @GetMapping("/myInfos")
+    public ResponseEntity<UserDto.UserInfo> myPage(@CurrentUser String email) {
+        UserDto.UserInfo loginUser = sessionLoginService.getCurrentUser(email);
         return ResponseEntity.ok(loginUser);
     }
 

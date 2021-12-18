@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import static com.financialboard.model.category.QCategory.category;
 import static com.financialboard.model.post.QPost.post;
 import static com.financialboard.model.user.QUser.user;
 import static org.springframework.util.StringUtils.hasText;
@@ -33,7 +32,6 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
                         post.id,
                         post.author,
                         post.title,
-                        post.category,
                         post.likesList,
                         post.comments
                         ))
@@ -52,32 +50,7 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
         return new PageImpl<>(postResponseList,pageable,total);
     }
 
-    @Override
-    public Page<SearchPostResponse> getCategoryByPost(Pageable pageable, Long id) {
-        QueryResults<SearchPostResponse> results = jpaQueryFactory
-                .select(Projections.fields(SearchPostResponse.class,
-                        post.id,
-                        post.title,
-                        post.author,
-                        post.category,
-                        post.comments,
-                        post.likesList
-                ))
-                .from(post)
-                .where(
-                        getCategoryId(id)
-                )
-                .orderBy(post.createTime.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetchResults();
 
-        List<SearchPostResponse> postResponses = results.getResults();
-        long total = results.getTotal();
-
-        return new PageImpl<>(postResponses,pageable,total);
-
-    }
 
     @Override
     public Page<SearchPostResponse> postBySort(Pageable pageable, PostStandard postStandard) {
@@ -86,7 +59,6 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
                         post.id,
                         post.title,
                         post.author,
-                        post.category,
                         post.comments,
                         post.likesList
                 ))
@@ -129,9 +101,5 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
         return (hasText(keyword)) ? post.title.containsIgnoreCase(keyword)
                 .or(post.title.containsIgnoreCase(keyword))
                 : null;
-    }
-
-    private BooleanExpression getCategoryId(Long categoryId){
-        return categoryId != null ? category.id.eq(categoryId) : null;
     }
 }

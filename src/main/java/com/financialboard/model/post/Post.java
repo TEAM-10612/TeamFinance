@@ -2,7 +2,6 @@ package com.financialboard.model.post;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.financialboard.dto.PostDto;
-import com.financialboard.model.category.Category;
 import com.financialboard.model.comment.Comment;
 import com.financialboard.model.likes.Likes;
 import com.financialboard.model.user.BaseTimeEntity;
@@ -35,9 +34,8 @@ public class Post extends BaseTimeEntity {
 
     private String postImgUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categroy_id")
-    private Category category;
+    @Enumerated(EnumType.STRING)
+    private PostCategory postCategory;
 
     @OneToMany(mappedBy = "post" , fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"post"})
@@ -48,26 +46,27 @@ public class Post extends BaseTimeEntity {
     private List<Likes> likesList = new ArrayList<>();
 
     @Builder
-    public Post(User author, String title, String content, String postImgUrl, Category category) {
+    public Post(User author, String title, String content, String postImgUrl,PostCategory postCategory) {
         this.author = author;
         this.title = title;
         this.content = content;
         this.postImgUrl = postImgUrl;
-        this.category = category;
+        this.postCategory = postCategory;
     }
 
     public void update(PostDto.SaveRequest request){
         this.title = request.getTitle();
         this.content = request.getContent();
+        this.postCategory = request.getPostCategory();
         this.postImgUrl = request.getPostImgUrl();
-        this.category = request.getCategoryInfo().toEntity();
     }
 
     public PostDto.PostInfoResponse toPostInfo(){
         return PostDto.PostInfoResponse.builder()
                 .id(this.id)
-                .author(this.author.toUserInfoDto())
+                .author(this.author.toUserInfo())
                 .content(this.content)
+                .postCategory(this.postCategory)
                 .postImageUrl(this.postImgUrl)
                 .build();
     }

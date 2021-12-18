@@ -10,6 +10,5 @@ import java.util.List;
 public interface CustomPostRepository {
 
     Page<PostDto.SearchPostResponse> searchPostList(boolean useSearchBtn,Pageable pageable, PostDto.SearchCondition postResponse);
-    Page<PostDto.SearchPostResponse> getCategoryByPost(Pageable pageable, Long id);
     Page<PostDto.SearchPostResponse> postBySort(Pageable pageable, PostStandard postStandard);
 }

@@ -4,8 +4,10 @@ import com.financialboard.annotation.CurrentUser;
 import com.financialboard.annotation.LoginCheck;
 import com.financialboard.service.LikesService;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.Current;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.financialboard.util.ResponseConstants.OK;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,15 +16,16 @@ public class LikesController {
 
     private final LikesService likesService;
 
-    @PostMapping("/{postId}/likes")
+    @PostMapping("/{postId}")
     @LoginCheck
-    public void likes(@PathVariable Long postId, @CurrentUser Long id){
-        likesService.likes(postId,id);
+    public ResponseEntity likes(@PathVariable Long postId, @CurrentUser Long userId){
+        likesService.likes(postId,userId);
+        return OK;
     }
 
-    @DeleteMapping("/{postId}/unlikes")
-    @LoginCheck
-    public void unlikes(@PathVariable Long postId,@CurrentUser Long id){
-        likesService.unLikes(postId,id);
-    }
+//    @DeleteMapping("/{postId}/unlikes")
+//    @LoginCheck
+//    public void unlikes(@PathVariable Long postId,@CurrentUser Long id){
+//        likesService.unLikes(postId,id);
+//    }
 }

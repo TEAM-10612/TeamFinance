@@ -6,7 +6,7 @@ import com.financialboard.exception.user.EmailDuplicateException;
 import com.financialboard.exception.user.NicknameDuplicateException;
 import com.financialboard.exception.user.UnauthenticatedUserException;
 import com.financialboard.model.user.User;
-import com.financialboard.repository.CategoryRepository;
+
 import com.financialboard.repository.LikesRepository;
 import com.financialboard.repository.UserRepository;
 import com.financialboard.repository.comment.CommentRepository;
@@ -40,8 +40,6 @@ class UserServiceTest {
     @Mock
     CommentRepository commentRepository;
 
-    @Mock
-    CategoryRepository categoryRepository;
 
     @InjectMocks
     UserService userService;
