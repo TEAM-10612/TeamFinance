@@ -11,21 +11,20 @@ import static com.financialboard.util.ResponseConstants.OK;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/likes")
 public class LikesController {
 
     private final LikesService likesService;
 
-    @PostMapping("/{postId}")
+    @PostMapping("/likes/{postId}")
     @LoginCheck
     public ResponseEntity likes(@PathVariable Long postId, @CurrentUser Long userId){
         likesService.likes(postId,userId);
         return OK;
     }
 
-//    @DeleteMapping("/{postId}/unlikes")
-//    @LoginCheck
-//    public void unlikes(@PathVariable Long postId,@CurrentUser Long id){
-//        likesService.unLikes(postId,id);
-//    }
+    @DeleteMapping("/unlikes/{postId}")
+    @LoginCheck
+    public void unlikes(@PathVariable Long postId,@CurrentUser Long id){
+        likesService.unLikes(postId,id);
+    }
 }

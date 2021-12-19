@@ -1,6 +1,7 @@
 package com.financialboard.service;
 
 import com.financialboard.exception.ExistLikesException;
+import com.financialboard.exception.LikesNotFoundException;
 import com.financialboard.model.likes.Likes;
 import com.financialboard.model.post.Post;
 import com.financialboard.model.user.User;
@@ -33,5 +34,14 @@ public class LikesService {
         return likesRepository.findByUserAndPost(user, post).isEmpty();
     }
 
-
+    @Transactional
+    public void unLikes(Long postId, Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        Post post = postRepository.findById(postId).orElseThrow();
+        if(!isNotAlreadyLike(user, post)){
+            throw new LikesNotFoundException();
+        }else{
+            likesRepository.delete(Likes.builder().post(post).user(user).build());
+        }
+    }
 }
