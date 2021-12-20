@@ -21,27 +21,16 @@ public class LikesService {
     private final PostRepository postRepository;
 
     @Transactional
-    public void likes(long postId,long userId){
-        User user = userRepository.findById(userId).orElseThrow();
-        Post post = postRepository.findById(postId).orElseThrow();
-        if(isNotAlreadyLike(user,post)){
-            likesRepository.save(Likes.builder().post(post).user(user).build());
-        }else{
-            throw new ExistLikesException("이미 좋아요를 누른 게시글입니다.");
+    public void likes(long postId, long sessionId) {
+        try {
+            likesRepository.likes(postId, sessionId);
+        } catch (Exception e) {
+            throw new ExistLikesException("이미 좋아요 하였습니다.");
         }
-    }
-    private boolean isNotAlreadyLike(User user, Post post) {
-        return likesRepository.findByUserAndPost(user, post).isEmpty();
     }
 
     @Transactional
-    public void unLikes(Long postId, Long id) {
-        User user = userRepository.findById(id).orElseThrow();
-        Post post = postRepository.findById(postId).orElseThrow();
-        if(!isNotAlreadyLike(user, post)){
-            throw new LikesNotFoundException();
-        }else{
-            likesRepository.delete(Likes.builder().post(post).user(user).build());
-        }
+    public void unLikes(long postId, long sessionId) {
+        likesRepository.unLikes(postId, sessionId);
     }
 }

@@ -44,15 +44,18 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post",fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"post"})
     private List<Likes> likesList = new ArrayList<>();
-
     @Builder
-    public Post(User author, String title, String content, String postImgUrl,PostCategory postCategory) {
+    public Post(Long id, User author, String title, String content, String postImgUrl, PostCategory postCategory) {
+        this.id = id;
         this.author = author;
         this.title = title;
         this.content = content;
         this.postImgUrl = postImgUrl;
         this.postCategory = postCategory;
     }
+
+
+
 
     public void update(PostDto.SaveRequest request){
         this.title = request.getTitle();
