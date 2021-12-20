@@ -25,20 +25,6 @@ public class CommentApiController {
     private final UserRepository userRepository;
 
 
-    @Transactional
-    public Comment addComment (String text, long postId, long sessionId) {
-        Post post = postRepository.findById(postId).get();
-        User user = userRepository.findById(sessionId).orElseThrow(()->{
-            return new UserNotFoundException("유저 아이디를 찾을 수 없습니다.");
-        });
-        Comment comment = Comment.builder()
-                .content(text)
-                .post(post)
-                .author(user)
-                .build();
-        return commentRepository.save(comment);
-    }
-
     @DeleteMapping("/{id}")
     @LoginCheck
     public void deleteComment(@PathVariable Long id){
