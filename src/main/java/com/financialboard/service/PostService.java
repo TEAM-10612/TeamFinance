@@ -4,7 +4,7 @@ import com.financialboard.dto.PostDto;
 import com.financialboard.dto.PostDto.SaveRequest;
 import com.financialboard.exception.post.PostNotFoundException;
 import com.financialboard.model.post.Post;
-import com.financialboard.repository.CategoryRepository;
+
 import com.financialboard.repository.post.CustomPostRepository;
 import com.financialboard.repository.post.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,6 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final CategoryRepository categoryRepository;
 
     @Transactional
     public void savePost(SaveRequest request, @Nullable MultipartFile multipartFile){
@@ -61,12 +60,6 @@ public class PostService {
         savePost.update(updatePost);
 
 
-    }
-
-    public Page<PostDto.SearchPostResponse> getPostsByCategory(Pageable pageable,Long categoryId){
-        Page<PostDto.SearchPostResponse> categoryByPost = postRepository.getCategoryByPost(pageable, categoryId);
-
-        return categoryByPost;
     }
 
     private boolean isDeleteSavedImage(String savedImagePath, String updatedImagePath,

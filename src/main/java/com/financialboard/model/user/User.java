@@ -34,12 +34,10 @@ public class User extends UserBase {
     }
 
 
-    public UserDto.UserInfoDto toUserInfoDto(){
-        return UserDto.UserInfoDto.builder()
+    public UserDto.UserInfo toUserInfo(){
+        return UserDto.UserInfo.builder()
+                .id(this.getId())
                 .email(this.getEmail())
-                .nickname(this.getNickname())
-                .userLevel(this.getUserLevel())
-                .userGrade(this.getUserGrade())
                 .build();
     }
 

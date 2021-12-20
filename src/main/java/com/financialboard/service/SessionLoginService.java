@@ -48,9 +48,9 @@ public class SessionLoginService {
         return (String) session.getAttribute(USER_ID);
     }
 
-    public UserDto.UserInfoDto getCurrentUser(String email){
+    public UserDto.UserInfo getCurrentUser(String email){
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UnauthenticatedUserException("존재하지 않는 사용자 입니다.")).toUserInfoDto();
+                .orElseThrow(() -> new UnauthenticatedUserException("존재하지 않는 사용자 입니다.")).toUserInfo();
     }
 
     public UserLevel getUserLevel() {

@@ -5,7 +5,7 @@ import com.financialboard.dto.UserDto;
 import com.financialboard.model.post.Post;
 import com.financialboard.model.user.UserGrade;
 import com.financialboard.model.user.UserLevel;
-import com.financialboard.repository.CategoryRepository;
+
 import com.financialboard.repository.LikesRepository;
 import com.financialboard.repository.UserRepository;
 import com.financialboard.repository.comment.CommentRepository;
@@ -36,8 +36,6 @@ class PostServiceTest {
     @Mock
     CommentRepository commentRepository;
 
-    @Mock
-    CategoryRepository categoryRepository;
 
     @InjectMocks
     PostService postService;
@@ -46,9 +44,6 @@ class PostServiceTest {
         UserDto.UserInfo userInfo = UserDto.UserInfo.builder()
                 .id(1L)
                 .email("rdd@naver.com")
-                .nickname("KKKKKK")
-                .userGrade(UserGrade.BRONZE)
-                .userLevel(UserLevel.USER)
                 .build();
         return userInfo;
     }
@@ -75,18 +70,7 @@ class PostServiceTest {
 
         return request;
     }
-//    public CategoryDto.CategoryInfo categoryInfo (){
-//        CategoryDto.CategoryInfo categoryInfo = CategoryDto.CategoryInfo.builder()
-//                .id(1L)
-//                .branch("branch1")
-//                .code("K")
-//                .parentCategoryName(null)
-//                .level(0)
-//                .name("주식")
-//                .childCategory(null)
-//                .build();
-//        return categoryInfo;
-//    }
+
 
     @Test
     @DisplayName("게시글 업로드 ")

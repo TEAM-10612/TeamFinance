@@ -95,18 +95,12 @@ public class UserDto {
 
         private Long id;
         private String email;
-        private String nickname;
-        private UserGrade userGrade;
-        private UserLevel userLevel;
 
 
         public User toEntity(){
             return User.builder()
                     .id(this.id)
                     .email(this.email)
-                    .nickname(this.nickname)
-                    .userLevel(this.userLevel)
-                    .userGrade(this.userGrade)
                     .build();
         }
     }
