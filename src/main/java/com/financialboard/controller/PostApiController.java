@@ -24,7 +24,7 @@ public class PostApiController {
     private final PostService postService;
     private final PostRepository postRepository;
 
-    @PostMapping("/posts/save")
+    @PostMapping(value = "/posts/save")
     @LoginCheck
     public ResponseEntity<PostDto.SaveRequest> savePost(
             @Valid@RequestBody PostDto.SaveRequest request,
@@ -41,7 +41,7 @@ public class PostApiController {
         postService.deletePost(id,userid);
     }
 
-    @PatchMapping("/posts/{id}")
+    @PatchMapping(value = "/posts/{id}")
     @LoginCheck
     public ResponseEntity<PostDto.SaveRequest> updatePost(@PathVariable Long id,
                                                           @Valid@RequestBody PostDto.SaveRequest request
@@ -53,9 +53,12 @@ public class PostApiController {
 
 
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     @LoginCheck
-    public void getPost(@PathVariable long id){
+    public ResponseEntity<PostDto.PostInfoResponse> getPost(@PathVariable long id){
+        PostDto.PostInfoResponse post = postService.getPost(id);
+
+        return ResponseEntity.ok(post);
     }
 
 }

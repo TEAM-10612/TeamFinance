@@ -46,7 +46,7 @@ public class UserApiController {
      * @param loginRequest
      * @return
      */
-    @PostMapping("/login")
+    @PostMapping(value = "/login")
     public void login(@RequestBody UserDto.LoginRequest loginRequest) {
         sessionLoginService.login(loginRequest);
     }
@@ -56,7 +56,7 @@ public class UserApiController {
      * @return
      */
     @LoginCheck
-    @DeleteMapping("/logout")
+    @DeleteMapping(value = "/logout")
     public void logout() {
         sessionLoginService.logout();
     }
@@ -66,7 +66,7 @@ public class UserApiController {
      * @return
      */
     @LoginCheck
-    @GetMapping("/myInfos")
+    @GetMapping(value = "/myInfos")
     public ResponseEntity<UserDto.UserInfo> myPage(@CurrentUser String email) {
         UserDto.UserInfo loginUser = sessionLoginService.getCurrentUser(email);
         return ResponseEntity.ok(loginUser);

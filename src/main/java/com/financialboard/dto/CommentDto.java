@@ -17,15 +17,11 @@ public class CommentDto {
     public static class AddCommentRequest{
 
         private String content;
-        private UserInfo author;
-        private PostInsertComment post;
 
 
         public Comment toEntity(){
             return Comment.builder()
                     .content(this.content)
-                    .author(this.author.toEntity())
-                    .post(this.post.toEntity())
                     .build();
         }
     }
