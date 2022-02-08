@@ -11,6 +11,7 @@ import com.financialboard.repository.comment.CommentRepository;
 import com.financialboard.repository.post.PostRepository;
 import com.financialboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +25,12 @@ public class CommentApiController {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
+    @PostMapping(value = "/{userId}/{postId}")
+    public void addComment(@PathVariable Long userId, @PathVariable Long postId,AddCommentRequest request){
+        commentService.addComment(request,postId,userId);
+    }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}")
     @LoginCheck
     public void deleteComment(@PathVariable Long id){
         commentService.deleteComment(id);

@@ -22,13 +22,13 @@ public class LikesController {
     private final LikesService likesService;
     private final PostService postService;
 
-    @PostMapping("/post/{postId}/likes")
+    @PostMapping(value = "/post/{postId}/likes")
     public ResponseEntity<?> likes(@PathVariable long postId , @CurrentUser PrincipalDetails principalDetails) {
         likesService.likes(postId, principalDetails.getUser().getId());
         return new ResponseEntity<>("좋아요 성공", HttpStatus.OK);
     }
 
-    @DeleteMapping("/post/{postId}/likes")
+    @DeleteMapping(value = "/post/{postId}/likes")
     public ResponseEntity<?> unLikes(@PathVariable long postId , @AuthenticationPrincipal PrincipalDetails principalDetails) {
         likesService.unLikes(postId, principalDetails.getUser().getId());
         return new ResponseEntity<>("좋아요 취소 성공", HttpStatus.OK);

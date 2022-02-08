@@ -26,13 +26,13 @@ public class CommentService {
     private final PostRepository postRepository;
 
     @Transactional
-    public Comment addComment (String text, long postId, long sessionId) {
-        Post post = postRepository.findById(postId).get();
-        User user = userRepository.findById(sessionId).orElseThrow(()->{
+    public Comment addComment (AddCommentRequest request,Long postId, Long userId) {
+        Post post = postRepository.findById(postId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(()->{
             return new UserNotFoundException("유저 아이디를 찾을 수 없습니다.");
         });
         Comment comment = Comment.builder()
-                .content(text)
+                .content(request.getContent())
                 .post(post)
                 .author(user)
                 .build();

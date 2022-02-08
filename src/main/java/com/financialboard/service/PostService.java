@@ -42,6 +42,21 @@ public class PostService {
         postRepository.deleteById(post.getId());
     }
 
+    @Transactional(readOnly = true)
+    public PostDto.PostInfoResponse getPost(Long id){
+        Post post = postRepository.findById(id).orElseThrow();
+        PostDto.PostInfoResponse response = PostDto.PostInfoResponse.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .author(post.getAuthor().toUserInfo())
+                .content(post.getContent())
+                .postImageUrl(post.getPostImgUrl())
+                .postCategory(post.getPostCategory())
+                .build();
+
+        return response;
+    }
+
     @Transactional
     public void updatePost(Long id, SaveRequest updatePost, @Nullable MultipartFile multipartFile){
         Post savePost = postRepository.findById(id)
